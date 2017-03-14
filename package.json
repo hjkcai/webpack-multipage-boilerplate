@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hjkcai/gulp-webpack-boilerplate.git"
+    "url": "git+https://github.com/hjkcai/webpack-multipage-boilerplate.git"
   },
   "keywords": [
     "webpack",
@@ -19,9 +19,9 @@
   "author": "huajingkun1214 <huajingkun1214@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hjkcai/gulp-webpack-boilerplate/issues"
+    "url": "https://github.com/hjkcai/webpack-multipage-boilerplate/issues"
   },
-  "homepage": "https://github.com/hjkcai/gulp-webpack-boilerplate#readme",
+  "homepage": "https://github.com/hjkcai/webpack-multipage-boilerplate#readme",
   "devDependencies": {
     "autoprefixer": "^6.7.7",
     "babel": "^6.23.0",
