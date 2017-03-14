@@ -18,6 +18,27 @@ module.exports = merge(require('./webpack.base.conf'), {
   output: {
     filename: '[name].js'
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader?importLoaders=1',
+          'postcss-loader'
+        ]
+      },
+      {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'less-loader'
+        ]
+      }
+    ]
+  },
   devtool: config().devtool,
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

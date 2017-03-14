@@ -6,7 +6,6 @@ const merge = require('webpack-merge')
 const config = require('../config')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const projectRoot = path.resolve(__dirname, '../')
 const src = path.join(projectRoot, 'src')
@@ -79,27 +78,6 @@ module.exports = merge({
         ]
       },
       {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader?importLoaders=1',
-            'postcss-loader'
-          ]
-        })
-      },
-      {
-        test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader',
-            'postcss-loader',
-            'less-loader'
-          ]
-        })
-      },
-      {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
@@ -121,8 +99,6 @@ module.exports = merge({
     new webpack.DefinePlugin({
       'process.env': config().env
     }),
-
-    new ExtractTextPlugin(config().assetsSubDirectory + '/css/[name].[contenthash].css'),
 
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common'
