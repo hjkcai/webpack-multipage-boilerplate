@@ -1,0 +1,23 @@
+{
+  "name": "webpack-multi-page-boilerplate",
+  "version": "1.0.0",
+  "description": "A boilerplate using pug, less/sass/scss and webpack 2 for building multi-page apps",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hjkcai/gulp-webpack-boilerplate.git"
+  },
+  "keywords": [
+    "webpack",
+    "boilerplate"
+  ],
+  "author": "huajingkun1214 <huajingkun1214@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hjkcai/gulp-webpack-boilerplate/issues"
+  },
+  "homepage": "https://github.com/hjkcai/gulp-webpack-boilerplate#readme"
+}
