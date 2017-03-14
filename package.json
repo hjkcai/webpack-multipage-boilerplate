@@ -1,7 +1,7 @@
 {
   "name": "webpack-multipage-boilerplate",
   "version": "1.0.0",
-  "description": "A boilerplate using pug, less and webpack 2 for building multi-page apps",
+  "description": "A boilerplate using pug, less and webpack 2 for building multi-page website",
   "main": "index.js",
   "scripts": {
     "build": "node build/build.js",
