@@ -52,8 +52,6 @@
     "pug": "^2.0.0-beta11",
     "pug-html-loader": "^1.1.1",
     "style-loader": "^0.13.2",
-    "ts-loader": "^2.0.1",
-    "typescript": "^2.2.1",
     "url-loader": "^0.5.8",
     "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.10.1",

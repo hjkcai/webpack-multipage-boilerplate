@@ -57,14 +57,6 @@ module.exports = merge({
         exclude: /node_modules/
       },
       {
-        test: /\.ts$/,
-        use: [
-          'babel-loader',
-          'ts-loader'
-        ],
-        exclude: /node_modules/
-      },
-      {
         test: /\.html$/,
         use: [
           'html-loader'
