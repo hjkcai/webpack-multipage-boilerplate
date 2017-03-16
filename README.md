@@ -100,3 +100,31 @@ There are two configuration files in the `config` folder: `dev.conf.js` and `pro
 7. `proxyTable` (dev): An easy way to make you access your APIs through the development server. See [http://vuejs-templates.github.io/webpack/proxy.html](http://vuejs-templates.github.io/webpack/proxy.html)
 
 ## Limitations
+
+There are some limitations you need to pay attention to:
+
+1. You must add *at least* one JavaScript file in `scripts`. Otherwise webpack cannot start because no entry is  present.
+
+2. You need to import local style files in the JavaScript code via `import` or `require` like this:
+
+    ```javascript
+    import '../assets/styles/normalize.css'     // import from your own file
+    import 'normalize-css'                      // import from node_modules
+
+    require('../assets/styles/page1.less')      // commonjs style
+    ```
+
+    You cannot do this:
+
+    ```html
+    <link rel="stylesheet" href="../assets/styles/normalize.css">
+    ```
+
+    But importing external styles is still need to import via `<link>`:
+
+    ```html
+    <link rel="stylesheet" href="somecdn.example.com/abc.css">
+    ```
+
+3. When you create a new view/script or delete an existing view/script, **the development server must be completely restarted** (in order to alter webpack's configuration). That results in *a slow recompilation*. 
+
