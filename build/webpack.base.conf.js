@@ -74,7 +74,7 @@ module.exports = merge({
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: path.posix.join(config().assetsSubDirectory, 'img/[name].[hash:7].[ext]')
+          name: path.posix.join(config().assetsSubDirectory || '', 'img/[name].[hash:7].[ext]')
         }
       },
       {
@@ -82,7 +82,7 @@ module.exports = merge({
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: path.posix.join(config().assetsSubDirectory, 'fonts/[name].[hash:7].[ext]')
+          name: path.posix.join(config().assetsSubDirectory || '', 'fonts/[name].[hash:7].[ext]')
         }
       }
     ]
