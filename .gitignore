@@ -42,3 +42,6 @@ jspm_packages
 
 # mac temp files
 .DS_Store
+
+# built files
+dist
