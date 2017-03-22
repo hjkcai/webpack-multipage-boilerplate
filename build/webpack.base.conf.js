@@ -1,6 +1,7 @@
 'use strict'
 
 const fs = require('fs')
+const glob = require('glob')
 const path = require('path')
 const merge = require('webpack-merge')
 const config = require('../config')
@@ -11,18 +12,28 @@ const projectRoot = path.resolve(__dirname, '../')
 const src = path.join(projectRoot, 'src')
 
 // Read all .js files inside 'scripts' folder as entries
-const chunks = fs.readdirSync(path.join(src, 'scripts'))
-  .filter(filename => /\.js$/.test(filename))
-  .map(filename => filename.replace(/\.js$/, ''))     // remove extention for further use
+const chunks = glob.sync(path.join(src, 'scripts', '**/*.js')).map(filename => {
+  // remove extention for further use
+  return path.relative(path.join(src, 'scripts'), filename).replace(/\.js$/, '')
+})
 
-const entry = chunks.reduce((entries, chunk) => {
+const entries = chunks.reduce((entries, chunk) => {
   entries[chunk] = path.join(src, 'scripts', `${chunk}.js`)
   return entries
 }, {})
 
-if (Object.keys(entry).length === 0) {
+if (Object.keys(entries).length === 0) {
   throw new Error('Please add at lease one js files in src/scripts')
 }
+
+// Read all .html and .pug as views
+const views = glob.sync(path.join(src, 'views', '**/*.@(html|pug)')).map(filename => {
+  // remove extention for further use
+  return {
+    filename,
+    name: path.relative(path.join(src, 'views'), filename).replace(/\.(html|pug)$/, '')
+  }
+})
 
 // Read all folders inside 'src' folder as alias
 const alias = fs.readdirSync(src).reduce((dirs, filename) => {
@@ -34,7 +45,7 @@ const alias = fs.readdirSync(src).reduce((dirs, filename) => {
 }, { src })
 
 module.exports = merge({
-  entry,
+  entry: entries,
   output: {
     path: config().output,
     publicPath: config().assetsPublicPath
@@ -96,17 +107,14 @@ module.exports = merge({
       name: 'common'
     }),
 
-    ...fs.readdirSync(path.join(src, 'views'))
-      .filter(filename => /\.(html|pug)$/.test(filename))
-      .map(filename => ({ filename, name: filename.replace(/\.(html|pug)$/, '') }))
-      .map(entry => new HtmlWebpackPlugin({
-        filename: `${entry.name}.html`,
-        template: path.join(src, 'views', entry.filename),
-        chunks: [entry.name],
-        includeDependent: true,
-        chunksSortMode: 'dependency',
-        inject: true
-      }))
+    ...views.map(entry => new HtmlWebpackPlugin({
+      filename: `${entry.name}.html`,
+      template: entry.filename,
+      chunks: [entry.name],
+      includeDependent: true,
+      chunksSortMode: 'dependency',
+      inject: true
+    }))
   ],
   performance: {
     hints: process.env.NODE_ENV === 'production' ? 'warning' : false
