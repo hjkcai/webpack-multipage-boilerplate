@@ -5,7 +5,13 @@ const chokidar = require('chokidar')
 const childProcess = require('child_process')
 
 let devServer
+let restarting = false
+
 function fileChangedHandler () {
+  // prevent too many restarts in a short time
+  if (restarting) return
+  restarting = true
+
   new Promise(resolve => {
     // stop the original server
     if (devServer) {
@@ -16,6 +22,11 @@ function fileChangedHandler () {
   }).then(() => {
     // start server using child_process
     devServer = childProcess.fork(path.join(__dirname, 'dev-server.js'))
+    devServer.on('message', message => {
+      if (message === 'webpack-compilation-complete') {
+        restarting = false
+      }
+    })
   })
 }
 

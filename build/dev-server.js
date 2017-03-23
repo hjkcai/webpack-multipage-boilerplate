@@ -39,6 +39,9 @@ app.use(hotMiddleware)
 
 devMiddleware.waitUntilValid(function () {
   console.log(`> Listening at http://localhost:${port}` + '\n')
+
+  // tell dev.js that webpack has completed compilation
+  process.send('webpack-compilation-complete')
 })
 
 module.exports = app.listen(port, function (err) {
