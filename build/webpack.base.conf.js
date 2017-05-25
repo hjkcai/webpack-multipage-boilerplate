@@ -77,7 +77,7 @@ module.exports = merge({
         test: /\.pug$/,
         use: [
           'html-loader',
-          'pug-html-loader'
+          'pug-html-loader?basedir=' + src
         ]
       },
       {
