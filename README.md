@@ -63,6 +63,21 @@ You will have two pages generated: `page1.html` and `page2.html`. `header.pug` w
 
 **Run the example and you will see!**
 
+### Chunk map
+
+Sometimes 2 or more pages will use the same one script. Of course we do not want to create several JavaScript files with the same content. The chunk map is here to solve this problem. Just define some mapping rules within an object:
+
+```js
+{
+    'projects/**/*.pug': ['project'],
+    'projects/special-project.pug': ['projects/special-project']
+}
+```
+
+Then all the pug files inside the `projects` folder will have `project.js` included. And `projects/special-project.pug` will have `projects.js` *and* `projects/special-project.js` included.
+
+For more informations about the left side of the rules, read [this](https://github.com/isaacs/node-glob#glob-primer)
+
 ### Run in development mode
 
 > Remember to run `npm install` before you start development
@@ -126,5 +141,5 @@ There are some limitations you need to pay attention to:
     <link rel="stylesheet" href="somecdn.example.com/abc.css">
     ```
 
-3. When you create a new view/script or delete an existing view/script, **the development server must be completely restarted** (in order to alter webpack's configuration). That results in *a slow recompilation*. 
+3. When you create a new view/script or delete an existing view/script, **the development server must be completely restarted** (in order to alter webpack's configuration). That results in *a slow recompilation*.
 
