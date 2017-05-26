@@ -6,6 +6,7 @@ const path = require('path')
 const merge = require('webpack-merge')
 const config = require('../config')
 const webpack = require('webpack')
+const chunksMapRaw = require('../config/chunks')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const projectRoot = path.resolve(__dirname, '../')
@@ -27,9 +28,23 @@ if (Object.keys(entries).length === 0) {
 }
 
 // Read all .html and .pug as views
+const chunksMap = new Map()
+Object.keys(chunksMapRaw).forEach(key => {
+  if (!Array.isArray(chunksMapRaw[key])) {
+    chunksMapRaw[key] = [chunksMapRaw[key]]
+  }
+
+  const globs = glob.sync(path.join(src, 'views', key))
+  globs.forEach(item => {
+    if (chunksMap.has(item)) chunksMap.get(item).push(...chunksMapRaw[key])
+    else chunksMap.set(item, chunksMapRaw[key])
+  })
+})
+
 const views = glob.sync(path.join(src, 'views', '**/*.@(html|pug)')).map(filename => {
   // remove extention for further use
   return {
+    chunks: chunksMap.get(filename) || [name],
     filename,
     name: path.relative(path.join(src, 'views'), filename).replace(/\.(html|pug)$/, '')
   }
@@ -110,7 +125,7 @@ module.exports = merge({
     ...views.map(entry => new HtmlWebpackPlugin({
       filename: `${entry.name}.html`,
       template: entry.filename,
-      chunks: [entry.name],
+      chunks: entry.chunks,
       includeDependent: true,
       chunksSortMode: 'dependency',
       inject: true
