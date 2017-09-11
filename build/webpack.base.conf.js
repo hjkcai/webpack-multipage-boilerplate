@@ -44,7 +44,7 @@ Object.keys(chunksMapRaw).forEach(key => {
 const views = glob.sync(path.join(src, 'views', '**/*.@(html|pug)')).map(filename => {
   // remove extention for further use
   return {
-    chunks: chunksMap.get(filename) || [name],
+    chunks: chunksMap.get(filename) || '[name]',
     filename,
     name: path.relative(path.join(src, 'views'), filename).replace(/\.(html|pug)$/, '')
   }
